@@ -41,16 +41,12 @@ public class DataAdapter
     {
         this.sconn.Close();
     }
-    private string escapeSpecialCharacter(string query)
-    {
-        return query.Replace("'", "''");
-    }
+    
     #endregion
     #region Public
 
     public DataSet ExecuteSelectQuery(string query)
     {
-        query = escapeSpecialCharacter(query);
         DataSet ds = new DataSet("ResultSet");
         openConnection();
         try

@@ -66,7 +66,8 @@ public partial class SiteMaster : MasterPage
 
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        //todo user authentication is to be fixed.
+        Session["UserId"] = 1;
     }
 
     protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)
