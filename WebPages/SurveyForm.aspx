@@ -1,6 +1,24 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="SurveyForm.aspx.cs" Inherits="WebPages_SurveyForm" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" Runat="Server">
+     <div id="div_reviews" style="margin-top: 50px">
+        <h3>Reviews</h3>
+                <td valign="top" align="left" style="width: 100%; margin-bottom: 10px;  border-style: double" runat="server">
+                    <asp:Repeater runat="server" ID="repeater_Review" >
+                        <ItemTemplate>
+                            <div style="background-color:white;padding-left:10px;">
+                            <%# DataBinder.Eval(Container.DataItem, "ReviewContent")%>
+                                </div>
+                        </ItemTemplate>
+                        <AlternatingItemTemplate>
+                            <div style="background-color:grey;padding-left:10px;">
+                            <%# DataBinder.Eval(Container.DataItem, "ReviewContent")%>
+                                </div>
+                        </AlternatingItemTemplate>
+                    </asp:Repeater>
+                </td>
+    </div>
+
     <div>
         <asp:Label runat="server" ID="Label1" Text=""></asp:Label><br />
     <asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="false">

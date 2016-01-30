@@ -2,17 +2,14 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="Server">
     <h3>Artifact Submitted </h3>
-    <div style="width: 100%; margin: 5px 5px 5px 5px">
-        
-        <div id="div_ArtifactTitle" style="width: 100%; float: left" runat="server">
-        </div>
-        <div id="div_ArtifactText" style="width: 100%; float: left" runat="server">
-        </div>
+    <div style="width: 100%; height: 500px; margin: 5px 5px 5px 5px">
+
+        <iframe runat="server" id="i_wiki" src="" style="width: 100%; height: 100%;"></iframe>
     </div>
     <hr />
-    <div id="div_reviews" style="margin-top:50px">
+    <div id="div_reviews" style="margin-top: 50px">
         <h3>Reviews</h3>
-        <asp:ListView runat="server" ID="lv_Reviews">
+        <asp:ListView runat="server" ID="lv_Reviews" OnItemDataBound="lv_Reviews_ItemDataBound">
             <LayoutTemplate>
                 <table cellpadding="2" runat="server"
                     id="tblReviews" style="height: 320px">
@@ -35,14 +32,23 @@
                 </tr>
             </GroupTemplate>
             <ItemTemplate>
-                <td valign="top" align="left" style="width:100%" runat="server">
-                    <asp:Label ID="lbl_Label" runat="server" Text='<% #Eval("ReviewContent")%>'></asp:Label>
-                    </br>
+                <td valign="top" align="left" style="width: 100%; margin-bottom: 10px;  border-style: double" runat="server">
+                    Rated? :
                     <asp:Label ID="lbl_Status" runat="server" Text='<% #Eval("Status") %>'></asp:Label>
-                    <asp:HyperLink ID="ProductLink" runat="server"
-                        Target="_top" Text="Click to rate"
-                        NavigateUrl='<%#"SurveyForm?ReviewId=" + 
-              Eval("ReviewId") %>' />
+                    <asp:HyperLink ID="ProductLink" runat="server"  Target="_blank" Text="Click to rate" NavigateUrl='<%#"SurveyForm?ReviewRefId=" + Eval("ReviewRefId")+"&submissionId="+Eval("ReviewArtifactMapId")%>' />
+                    <br />
+                    <asp:Repeater runat="server" ID="repeater_Review" >
+                        <ItemTemplate>
+                            <div style="background-color:white;padding-left:10px;">
+                            <%# DataBinder.Eval(Container.DataItem, "ReviewContent")%>
+                                </div>
+                        </ItemTemplate>
+                        <AlternatingItemTemplate>
+                            <div style="background-color:grey;padding-left:10px;">
+                            <%# DataBinder.Eval(Container.DataItem, "ReviewContent")%>
+                                </div>
+                        </AlternatingItemTemplate>
+                    </asp:Repeater>
                 </td>
             </ItemTemplate>
         </asp:ListView>

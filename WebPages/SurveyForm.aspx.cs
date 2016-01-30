@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -7,18 +8,28 @@ using System.Web.UI.WebControls;
 
 public partial class WebPages_SurveyForm : System.Web.UI.Page
 {
-    long reviewId = 0;
+    long ReviewRefId = 0;
+    long submissionId = 0;
     protected void Page_Load(object sender, EventArgs e)
     {
-        reviewId = Request.QueryString["ReviewId"] == null ? 0 : Convert.ToInt64(Request.QueryString["ReviewId"]);
-        if (reviewId != 0)
+        ReviewRefId = Request.QueryString["ReviewRefId"] == null ? 0 : Convert.ToInt64(Request.QueryString["ReviewRefId"]);
+        submissionId = Request.QueryString["submissionId"] == null ? 0 : Convert.ToInt64(Request.QueryString["submissionId"]);
+        if (ReviewRefId != 0)
         {
-            Session["ReviewId"] = reviewId;
+            Session["ReviewId"] = ReviewRefId;
+            repeater_Review.DataSource = getReviews(ReviewRefId);
+            repeater_Review.DataBind();
         }
+    }
+    private DataTable getReviews(long reviewRefId)
+    {
+        DataAdapter dataAdapter = new DataAdapter();
+        DataSet ds = dataAdapter.ExecuteSelectQuery("SELECT  ReviewId,ReviewContent, ReviewRefId, R.ReviewArtifactMapId FROM REVIEW R INNER JOIN Artifact A ON a.ArtifactId = r.ReviewArtifactMapId where ReviewRefId = " + reviewRefId);
+        return ds.Tables[0];
     }
     protected void btnCancel_Click(object sender, EventArgs e)
     {
-        Response.Redirect("artifact.aspx\\?id=" + reviewId);
+        Response.Redirect("artifact.aspx\\?id=" + submissionId);
     }
     protected void btnSave_Click(object sender, EventArgs e)
     {
@@ -49,7 +60,7 @@ public partial class WebPages_SurveyForm : System.Web.UI.Page
         da.ExecuteInsertQuery("INSERT INTO SURVEYANSWER VALUES(8," + answer8 + ",'')");
         da.ExecuteInsertQuery("INSERT INTO SURVEYANSWER VALUES(9," + answer9 + ",'')");
         da.ExecuteInsertQuery("INSERT INTO SURVEYANSWER VALUES(10," + answer10 + ",'')");
-        Response.Redirect("artifact.aspx\\?id=" + reviewId);
+        Response.Redirect("artifact.aspx\\?id=" + submissionId);
 
 
 
