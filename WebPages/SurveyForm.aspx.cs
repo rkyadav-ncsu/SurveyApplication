@@ -13,6 +13,8 @@ public partial class WebPages_SurveyForm : System.Web.UI.Page
     long submissionId = 0;
     protected void Page_Load(object sender, EventArgs e)
     {
+        if(Session["UserToken"]==null)
+            Response.Redirect("surveyMaster");
         ReviewRefId = Request.QueryString["ReviewRefId"] == null ? 0 : Convert.ToInt64(Request.QueryString["ReviewRefId"]);
         submissionId = Request.QueryString["submissionId"] == null ? 0 : Convert.ToInt64(Request.QueryString["submissionId"]);
         if (!IsPostBack)

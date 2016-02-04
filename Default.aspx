@@ -11,15 +11,17 @@
         <div class="col-md-10">
             <h2>Tasks you will be performing</h2>
             <ul>
-                <li>Select a topic to review.</li>
-                <li>Read that topic.</li>
+                <li>Click on artifacts menu.</li>
+                <li>Provide your usercode.</li>
+                <li>Select an artifact to rate its reviews.</li>
+                <li>Read the artifact (In most cases, just a glance over artifact is enough).</li>
                 <li>
                     <div>
                         <ul>
                             
-                            <li>Select a review written for the current topic.</li>
-                            <li>Rate review based on the questionnaire.</li>
-                            <li>Select one more review and rate that for this topic.</li>
+                            <li>Select a review written for the artifact.</li>
+                            <li>Rate the review based on the questionnaire below.</li>
+                            <li>Select one more review and rate that for the same topic.</li>
                         </ul>
                     </div>
                 </li>
