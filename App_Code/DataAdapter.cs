@@ -26,13 +26,13 @@ public class DataAdapter
     #region Private
     private void openConnection()
     {
-        if(sconn==null)
+        if (sconn == null)
         {
             sconn = new SqlConnection(ConnectionString.ConnectionString);
         }
 
         //todo: this can be replaced with newer construct to handle null
-        if(sconn!= null && sconn.State == ConnectionState.Closed)
+        if (sconn != null && sconn.State == ConnectionState.Closed)
         {
             sconn.Open();
         }
@@ -41,7 +41,7 @@ public class DataAdapter
     {
         this.sconn.Close();
     }
-    
+
     #endregion
     #region Public
 
@@ -55,8 +55,10 @@ public class DataAdapter
             da.SelectCommand.ExecuteNonQuery();
             da.Fill(ds);
         }
-        catch(Exception ex) { }
-        finally { this.closeConnection();}
+        catch (Exception ex)
+        {
+        }
+        finally { this.closeConnection(); }
         return ds;
     }
     public void ExecuteInsertQuery(string query)
@@ -67,7 +69,7 @@ public class DataAdapter
             da.InsertCommand = new SqlCommand(query, sconn);
             da.InsertCommand.ExecuteNonQuery();
         }
-        catch { }
+        catch(Exception ex) { }
         finally { this.closeConnection(); }
     }
     public void ExecuteUpdateQuery(string query)
@@ -78,8 +80,28 @@ public class DataAdapter
             da.UpdateCommand = new SqlCommand(query, sconn);
             da.UpdateCommand.ExecuteNonQuery();
         }
-        catch { }
+        catch (Exception ex) { }
         finally { this.closeConnection(); }
+    }
+    public DataSet ExecuteStoredProcedure(string procedure, SqlParameter[] parameters)
+    {
+        DataSet ds = new DataSet();
+        using (var command = new SqlCommand(procedure, sconn))
+        {
+            command.CommandType = CommandType.StoredProcedure;
+            foreach(SqlParameter param in parameters)
+            {
+                command.Parameters.Add(param);
+            }
+            
+            sconn.Open();
+            da.SelectCommand = command;
+            da.SelectCommand.ExecuteNonQuery();
+            da.Fill(ds);
+            sconn.Close();
+        }
+        return ds;
+
     }
 
     #endregion

@@ -8,7 +8,9 @@
     </div>
     <hr />
     <div id="div_reviews" style="margin-top: 50px">
-        <h3>Reviews</h3>
+        <h3>Reviews</h3> (refresh the page to receive review status) <br />
+        Each review element is divided into three lines: Question, Score, and Answer. One or more of these elements can be absent, which means, either it was not provided or was not necessary.<br />
+        -1 for Score means no score was provided.<br />
         <asp:ListView runat="server" ID="lv_Reviews" OnItemDataBound="lv_Reviews_ItemDataBound">
             <LayoutTemplate>
                 <table cellpadding="2" runat="server"
@@ -20,23 +22,27 @@
                     PageSize="9">
                     <Fields>
                         <asp:NumericPagerField ButtonCount="3"
-                            PreviousPageText="<--"
-                            NextPageText="-->" />
+                            PreviousPageText="<---"
+                            NextPageText="--->" />
                     </Fields>
                 </asp:DataPager>
             </LayoutTemplate>
             <GroupTemplate>
+                <tr style="height:10px; background-color:lightgreen; border-style: solid">
+                    <td></td>
+                </tr>
                 <tr runat="server" id="reviewRow"
                     style="height: 80px">
                     <td runat="server" id="itemPlaceholder"></td>
                 </tr>
             </GroupTemplate>
             <ItemTemplate>
-                <td valign="top" align="left" style="width: 100%; margin-bottom: 10px;  border-style: double" runat="server">
+                <td valign="top" align="left" style="width: 100%; margin-bottom: 10px;  padding:5px 5px 0px 10px; border-style: solid" runat="server">
                     Rated? :
-                    <asp:Label ID="lbl_Status" runat="server" Text='<% #Eval("Status") %>'></asp:Label>
+                    <asp:Label ID="lbl_Status" runat="server" Text='<% #Eval("Status") %>' Font-Bold="true"></asp:Label>
                     <asp:HyperLink ID="ProductLink" runat="server"  Target="_blank" Text="Click to rate" NavigateUrl='<%#"SurveyForm?ReviewRefId=" + Eval("ReviewRefId")+"&submissionId="+Eval("ReviewArtifactMapId")%>' />
-                    <br />
+                    
+                    <hr />
                     <asp:Repeater runat="server" ID="repeater_Review" >
                         <ItemTemplate>
                             <div style="background-color:white;padding-left:10px;">
@@ -44,7 +50,7 @@
                                 </div>
                         </ItemTemplate>
                         <AlternatingItemTemplate>
-                            <div style="background-color:grey;padding-left:10px;">
+                            <div style="background-color:lightgrey;padding-left:10px;">
                             <%# DataBinder.Eval(Container.DataItem, "ReviewContent")%>
                                 </div>
                         </AlternatingItemTemplate>
