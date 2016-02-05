@@ -71,11 +71,16 @@ public partial class WebPages_SurveyForm : System.Web.UI.Page
                 List<RepeaterItem> listItem = r_SurveyQuestions.Controls.OfType<RepeaterItem>().ToList();
                 for (int i = 0; i < listItem.Count(); i++)
                 {
-                    DropDownList ddl = listItem[i].Controls.OfType<DropDownList>().ToList()[0];
-                    long answerId = Convert.ToInt64(ddl.SelectedValue);
+                    RadioButtonList rbl = listItem[i].Controls.OfType<RadioButtonList>().ToList()[0];
+                    //DropDownList ddl = listItem[i].Controls.OfType<DropDownList>().ToList()[0];
+                    long answerId = Convert.ToInt64(rbl.SelectedValue);
                     long questionId = Convert.ToInt64(datatable.Rows[i]["QuestionId"]);
                     artifactId = Convert.ToInt64(datatable.Rows[i]["ArtifactId"]);
-                    da.ExecuteInsertQuery("INSERT INTO SURVEYANSWER VALUES(" + questionId + "," + answerId + ",'')");
+                    DataTable dt = da.ExecuteSelectQuery("select * from SURVEYANSWER where questionId=" + questionId + " and surveyId= " + surveyId).Tables[0];
+                    if (dt==null || dt.Rows.Count==0)
+                    {
+                        da.ExecuteInsertQuery("INSERT INTO SURVEYANSWER VALUES(" + questionId + "," + surveyId + "," + answerId + ",'')");
+                    }
 
                 }
             }

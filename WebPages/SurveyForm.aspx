@@ -27,7 +27,19 @@
         <asp:Repeater runat="server" ID="r_SurveyQuestions">
             <ItemTemplate>
                 <asp:Label runat="server" ID="Label1" Text='<% #Eval("QuestionText") %>'></asp:Label><br />
-                <asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="false" Width="100px">
+                <asp:RadioButtonList runat="server" ID="rb_selector" AutoPostBack="false" Width="100%" RepeatDirection="Horizontal" Height="3em" >
+                    <asp:ListItem Text="Strongly disagree" Value="1">
+                    </asp:ListItem>
+                    <asp:ListItem Text="Somewhat disagree" Value="2">
+                    </asp:ListItem>
+                    <asp:ListItem Text="Neutral" Value="3" Selected="True">
+                    </asp:ListItem>
+                    <asp:ListItem Text="Somewhat agree" Value="4">
+                    </asp:ListItem>
+                    <asp:ListItem Text="Strongly Agree" Value="5">
+                    </asp:ListItem>
+                </asp:RadioButtonList><hr /> 
+                <%--<asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="false" Width="100px">
                     <asp:ListItem Text="1" Value="1">
                     </asp:ListItem>
                     <asp:ListItem Text="2" Value="2">
@@ -38,7 +50,7 @@
                     </asp:ListItem>
                     <asp:ListItem Text="5" Value="5">
                     </asp:ListItem>
-                </asp:DropDownList>
+                </asp:DropDownList>--%>
                 <br />
             </ItemTemplate>
 
