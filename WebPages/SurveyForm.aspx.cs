@@ -62,28 +62,44 @@ public partial class WebPages_SurveyForm : System.Web.UI.Page
         //todo  this should be converted into a stored procedure. Check if review is already done by the user.
         if (Session["UserToken"] != null)
         {
-            da.ExecuteInsertQuery("insert into SurveyMaster values(" + Session["ReviewRefId"] + "," + Session["UserToken"] + ", getdate())");
-            long surveyId = Convert.ToInt64(da.ExecuteSelectQuery("SELECT top 1 surveyId FROM SURVEYMASTER WHERE ReviewId=" + Session["ReviewRefId"] + "and UserId=" + Session["UserToken"]).Tables[0].Rows[0][0]);
-            DataTable datatable = getQuestions();
-            
-            if (r_SurveyQuestions.Controls.Count > 0)
+            long surveyId = 0;
+            DataSet ds = da.ExecuteSelectQuery("SELECT top 1 surveyId FROM SURVEYMASTER WHERE ReviewId=" + Session["ReviewRefId"] + "and UserId=" + Session["UserToken"]);
+            if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count>0)
             {
-                List<RepeaterItem> listItem = r_SurveyQuestions.Controls.OfType<RepeaterItem>().ToList();
-                for (int i = 0; i < listItem.Count(); i++)
-                {
-                    RadioButtonList rbl = listItem[i].Controls.OfType<RadioButtonList>().ToList()[0];
-                    //DropDownList ddl = listItem[i].Controls.OfType<DropDownList>().ToList()[0];
-                    long answerId = Convert.ToInt64(rbl.SelectedValue);
-                    long questionId = Convert.ToInt64(datatable.Rows[i]["QuestionId"]);
-                    artifactId = Convert.ToInt64(datatable.Rows[i]["ArtifactId"]);
-                    DataTable dt = da.ExecuteSelectQuery("select * from SURVEYANSWER where questionId=" + questionId + " and surveyId= " + surveyId).Tables[0];
-                    if (dt==null || dt.Rows.Count==0)
-                    {
-                        da.ExecuteInsertQuery("INSERT INTO SURVEYANSWER VALUES(" + questionId + "," + surveyId + "," + answerId + ",'')");
-                    }
+                surveyId = Convert.ToInt64(ds.Tables[0].Rows[0][0]);
+            }
+            if (surveyId == 0)
+            {
+                //new survey
+                da.ExecuteInsertQuery("insert into SurveyMaster values(" + Session["ReviewRefId"] + "," + Session["UserToken"] + ", getdate())");
+                surveyId = Convert.ToInt64(da.ExecuteSelectQuery("SELECT top 1 surveyId FROM SURVEYMASTER WHERE ReviewId=" + Session["ReviewRefId"] + "and UserId=" + Session["UserToken"]).Tables[0].Rows[0][0]);
+                DataTable datatable = getQuestions();
 
+                if (r_SurveyQuestions.Controls.Count > 0)
+                {
+                    List<RepeaterItem> listItem = r_SurveyQuestions.Controls.OfType<RepeaterItem>().ToList();
+                    for (int i = 0; i < listItem.Count(); i++)
+                    {
+                        RadioButtonList rbl = listItem[i].Controls.OfType<RadioButtonList>().ToList()[0];
+                        //DropDownList ddl = listItem[i].Controls.OfType<DropDownList>().ToList()[0];
+                        long answerId = Convert.ToInt64(rbl.SelectedValue);
+                        long questionId = Convert.ToInt64(datatable.Rows[i]["QuestionId"]);
+                        artifactId = Convert.ToInt64(datatable.Rows[i]["ArtifactId"]);
+                        DataTable dt = da.ExecuteSelectQuery("select * from SURVEYANSWER where questionId=" + questionId + " and surveyId= " + surveyId).Tables[0];
+                        if (dt == null || dt.Rows.Count == 0)
+                        {
+                            da.ExecuteInsertQuery("INSERT INTO SURVEYANSWER VALUES(" + questionId + "," + surveyId + "," + answerId + ",'',getdate())");
+                        }
+
+                    }
                 }
             }
+            else
+            {
+                //existing survey
+                //to-do
+            }
+           
             Session["ReviewRefId"] = null;
             ClientScript.RegisterStartupScript(typeof(Page), "closePage", "window.close();", true);
             //Response.Redirect("artifact.aspx\\?id=" + artifactId);

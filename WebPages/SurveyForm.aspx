@@ -28,7 +28,7 @@
         <asp:Repeater runat="server" ID="r_SurveyQuestions">
             <ItemTemplate>
                 <asp:Label runat="server" ID="Label1" Text='<% #Eval("QuestionText") %>'></asp:Label><br />
-                <span>1 = low score, 5 = high score</span><br />
+                <span>(1 = low score, 5 = high score)</span><br />
                 <asp:RadioButtonList runat="server" ID="rb_selector" AutoPostBack="false" Width="100%" RepeatDirection="Horizontal" Height="3em">
                     <asp:ListItem Text="1" Value="1">
                     </asp:ListItem>
@@ -49,7 +49,7 @@
     </div>
     <div style="margin-top: 10px; padding: 10px 5px 5px 10px">
         <input onclick="window.close();" type="button" value="close" />
-        <asp:Button runat="server" ID="btnSave" Text="Save" OnClick="btnSave_Click" />
+        <asp:Button runat="server" ID="btnSave" Text="Submit" OnClick="btnSave_Click" />
     </div>
 </asp:Content>
 
