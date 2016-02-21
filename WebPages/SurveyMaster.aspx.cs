@@ -16,7 +16,7 @@ public partial class WebPages_SurveyMaster : System.Web.UI.Page
     {
         DataAdapter dataAdapter = new DataAdapter();
         DataSet ds = new DataSet();
-        ds=dataAdapter.ExecuteSelectQuery("Select * from Artifact where  Datalength(ArtifactText) <> 0 and ArtifactText like '%SPRING_2014%' ");
+        ds=dataAdapter.ExecuteSelectQuery("Select * from Artifact where  Datalength(ArtifactText) <> 0 and ArtifactText like '%Wikipedia%' order by ArtifactId desc ");
         gv_SurveyMaster.DataSource = ds.Tables[0];
         gv_SurveyMaster.DataBind();
     }

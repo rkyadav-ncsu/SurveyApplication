@@ -13,7 +13,7 @@
                             </div>
                         </ItemTemplate>
                         <AlternatingItemTemplate>
-                            <div style="background-color: grey; padding-left: 10px;">
+                            <div style="background-color: lightgrey; padding-left: 10px;">
                                 <%# DataBinder.Eval(Container.DataItem, "ReviewContent")%>
                             </div>
                         </AlternatingItemTemplate>

@@ -19,7 +19,7 @@
                     </tr>
                 </table>
                 <asp:DataPager runat="server" ID="DataPager"
-                    PageSize="9">
+                    PageSize="50">
                     <Fields>
                         <asp:NumericPagerField ButtonCount="3"
                             PreviousPageText="<---"
