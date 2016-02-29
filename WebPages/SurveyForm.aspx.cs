@@ -60,7 +60,7 @@ public partial class WebPages_SurveyForm : System.Web.UI.Page
         DataAdapter da = new DataAdapter();
         long artifactId = 0;
         //todo  this should be converted into a stored procedure. Check if review is already done by the user.
-        if (Session["UserToken"] != null)
+        if (Session["UserToken"] != null && Session["ReviewRefId"]!=null)
         {
             long surveyId = 0;
             DataSet ds = da.ExecuteSelectQuery("SELECT top 1 surveyId FROM SURVEYMASTER WHERE ReviewId=" + Session["ReviewRefId"] + "and UserId=" + Session["UserToken"]);
@@ -102,7 +102,6 @@ public partial class WebPages_SurveyForm : System.Web.UI.Page
            
             Session["ReviewRefId"] = null;
             ClientScript.RegisterStartupScript(typeof(Page), "closePage", "window.close();", true);
-            //Response.Redirect("artifact.aspx\\?id=" + artifactId);
         }
         //else
         //Response.Redirect("surveyMaster");
