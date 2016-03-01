@@ -71,7 +71,9 @@ public partial class WebPages_SurveyForm : System.Web.UI.Page
             if (surveyId == 0)
             {
                 //new survey
-                da.ExecuteInsertQuery("insert into SurveyMaster values(" + Session["ReviewRefId"] + "," + Session["UserToken"] + ", getdate())");
+                String query="insert into SurveyMaster values("+Session["ReviewRefId"]+","+Session["UserToken"]+",getdate())";
+                da.ExecuteInsertQuery(query);
+                //read the latest input query.
                 surveyId = Convert.ToInt64(da.ExecuteSelectQuery("SELECT top 1 surveyId FROM SURVEYMASTER WHERE ReviewId=" + Session["ReviewRefId"] + "and UserId=" + Session["UserToken"]).Tables[0].Rows[0][0]);
                 DataTable datatable = getQuestions();
 
