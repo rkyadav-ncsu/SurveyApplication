@@ -8,9 +8,10 @@
     </div>
     <hr />
     <div id="div_reviews" style="margin-top: 50px">
+        <div style="visibility:hidden">
         <h3>Reviews</h3> (refresh the page to receive review status) <br />
         Each review element is divided into three lines: Question, Score, and Answer. One or more of these elements can be absent, which means, either it was not provided or was not necessary.<br />
-        -1 for Score means no score was provided.<br />
+        -1 for Score means no score was provided.<br /></div>
         <asp:ListView runat="server" ID="lv_Reviews" OnItemDataBound="lv_Reviews_ItemDataBound">
             <LayoutTemplate>
                 <table cellpadding="2" runat="server"
@@ -38,9 +39,9 @@
             </GroupTemplate>
             <ItemTemplate>
                 <td valign="top" align="left" style="width: 100%; margin-bottom: 10px;  padding:5px 5px 0px 10px; border-style: solid" runat="server">
-                    Rated? :
-                    <asp:Label ID="lbl_Status" runat="server" Text='<% #Eval("Status") %>' Font-Bold="true"></asp:Label>
-                    <asp:HyperLink ID="ProductLink" runat="server"  Target="_blank" Text="Click to rate" NavigateUrl='<%#"SurveyForm?ReviewRefId=" + Eval("ReviewRefId")+"&submissionId="+Eval("ReviewArtifactMapId")%>' />
+                    <%--Rated? :--%>
+                    <asp:Label ID="lbl_Status" runat="server" Text='<% #Eval("Status") %>' Font-Bold="true" Visible="false"></asp:Label>
+                    <%--<asp:HyperLink ID="ProductLink" runat="server"  Target="_blank" Text="Click to rate" NavigateUrl='<%#"SurveyForm?ReviewRefId=" + Eval("ReviewRefId")+"&submissionId="+Eval("ReviewArtifactMapId")%>' />--%>
                     
                     <hr />
                     <asp:Repeater runat="server" ID="repeater_Review" >

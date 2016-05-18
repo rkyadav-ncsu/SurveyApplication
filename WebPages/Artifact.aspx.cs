@@ -34,10 +34,10 @@ public partial class WebPages_Artifact : System.Web.UI.Page
         try
         {
             DataAdapter dataAdapter = new DataAdapter();
-            SqlParameter[] sqlParameter = new SqlParameter[2];
-            sqlParameter[0] = new SqlParameter("@userId", Session["UserToken"]);
-            sqlParameter[1] = new SqlParameter("@artifactId", id);
-            DataSet ds = dataAdapter.ExecuteStoredProcedure("sp_GetSurveyStatus",sqlParameter);
+            SqlParameter[] sqlParameter = new SqlParameter[1];
+            //sqlParameter[0] = new SqlParameter("@userId", Session["UserToken"]);
+            sqlParameter[0] = new SqlParameter("@artifactId", id);
+            DataSet ds = dataAdapter.ExecuteStoredProcedure("usp_getTopRatedReviews", sqlParameter);
             dt = ds.Tables[0];
         }
         catch (Exception ex)
